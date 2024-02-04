@@ -1,0 +1,827 @@
+---
+title: "R Mastery: A Comprehensive Guide to Statistical Analysis, Data Visualization, and Programming Essentials"
+date: last-modified
+image: "RMastery.png"
+author:
+  - name: Benjamin TOURNAN
+    email: benjamin.tournan@univ-tlse3.fr
+    #affiliation: Université Toulouse III -- Paul Sabatier
+abstract: |
+  This comprehensive document contains all the information I have ever used in R, ranging from fundamental statistical analysis and basic graphical representations to more advanced visualizations using various packages and the essential principles of programming with R. Whether you are a beginner or an advanced user, this document has something for everyone.
+license: "CC BY-NC-ND"
+title-block-banner: false
+format: 
+  html: 
+    toc: true
+    toc-depth: 4
+    toc-title: On this page
+    smooth-scroll: true
+    code-link: true
+    html-math-method: katex
+    theme: cosmo
+    email-obfuscation: javascript
+    self-contained: true
+editor: visual
+---
+
+```{=html}
+<style>
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+</style>
+```
+## Overview
+
+This comprehensive document contains all the information I have ever used in R, ranging from fundamental statistical analysis and basic graphical representations to more advanced visualizations using various packages and the essential principles of programming with R. Whether you are a beginner or an advanced user, this document has something for everyone.
+
+You will find a wealth of information on statistical analysis, including descriptive statistics, hypothesis testing, regression analysis, and more. In addition to these basic concepts, I also cover more advanced topics such as data visualization with `ggplot2`, which will enable you to create complex and aesthetically pleasing graphs to better illustrate your data.
+
+Moreover, this document provides an overview of R programming essentials, including the data structures, functions, loops, and conditionals that are the building blocks of the language. By understanding these basic concepts, you can more easily manipulate and analyze data in R.
+
+To ensure that this code can be reproduced if needed, I have included a chapter on "Reproducibility" at the end of this document. In this section, I provide a summary of every package I used, as well as their version, which can be useful if the code breaks. Overall, this document is a valuable resource for anyone who wants to improve their R programming skills and gain a deeper understanding of statistical analysis and data visualization.
+
+## Data manipulation
+
+To begin with R it is primordial to know your way around a data frame, in this section I will go over the functions needed to shape your date like you need it.
+
+### Base R
+
+The most basic manipulation and overview functions are directly in R without any package necessary.
+
+#### Import your data
+
+The first step is to import your data. To import data into R, there are several functions you can use, including `read.table()`, `read.csv()`, `read.csv2()`, `read.delim()`, `read.delim2()`, and more. Here's a brief explanation of each function:
+
+-   `read.table()`: This function is used to read data from a text file. It is a very versatile function that can handle many different file formats, but it requires you to specify some arguments such as the file path, the delimiter used in the file, and if the file contains a header or not.
+-   `read.csv()`: This function is similar to `read.table()`, but it is specifically designed to read comma-separated value (CSV) files. It assumes that the file has a header row, and it automatically sets the delimiter to a comma.
+-   `read.csv2()`: This function is similar to `read.csv()`, but it is specifically designed to read CSV files where the decimal separator is a semicolon (;) and the field separator is a comma (,).
+-   `read.delim()`: This function is similar to `read.csv()`, but it is specifically designed to read tab-delimited files.
+-   `read.delim2()`: This function is similar to `read.delim()`, but it is specifically designed to read tab-delimited files where the decimal separator is a semicolon (;) and the field separator is a tab (\\t). For example, to read a CSV file named "data.csv" in your current working directory, you can use the read.csv function as follows:
+
+```{r}
+#| eval: false
+
+data <- read.csv("data.csv")
+```
+
+This assumes that the file has a header row, uses a comma as the delimiter, and that the file is located in your current working directory.
+
+You can adjust the parameters of these functions based on the specifics of your data and the file format. For more information, you can use the R help system by typing `?read.csv`, `?read.table`, etc.
+
+#### What does your data look like?
+
+In this section I will give you some of the most commonly used functions in R for exploring and summarizing data.
+
+The function `head()` is used to display the first few rows of a data frame. By default, it displays the first six rows, but you can specify the number of rows you want to display.
+
+```{r}
+data(iris) # load the iris dataset
+head(iris)
+```
+
+The function `summary()` is used to generate a summary of a data frame, including measures of central tendency and variability for each variable. It is particularly useful for identifying missing values, outliers, and the distribution of the data.
+
+```{r}
+#| echo: !expr c(2)
+options(width = 100)
+summary(iris)
+```
+
+The `str()` function is used to display the structure of a data frame, including the number of observations and variables, their names, data types, and a preview of the data. It is particularly useful for identifying the format of the data and for checking if variables are of the right data type.
+
+```{r}
+str(iris)
+```
+
+The `colSums(is.na(data))` function is used to check for missing values in a data frame. It returns the total number of missing values per column. It is particularly useful for identifying if any variables have missing data and for imputing missing values.
+
+```{r}
+colSums(is.na(iris))
+```
+
+#### Basic functions
+
+To effectively modify and customize your data frames, you'll need to utilize a variety of functions available in R. Fortunately, there are numerous options available to help you achieve your desired results. Below are some examples of functions you may find helpful in your data frame manipulations.
+
+One of the most useful function is `subset()`. This function allows you to subset a data frame based on one or more conditions. Here's an example of using `subset()` to select only the rows of the `iris` dataframe where the value in the `Sepal.Length` column is greater than 5:
+
+```{r}
+iris_subset <- subset(iris, Sepal.Length > 5)
+head(iris_subset)
+```
+
+The function `merge()` allows you to merge two or more data frames based on a common variable. Here's an example of using `merge()` to combine two data frames based on the common `ID` column:
+
+```{r}
+# create two sample data frames
+df1 <- data.frame(id = c(1, 2, 3), x = c(4, 5, 6))
+df2 <- data.frame(id = c(2, 3, 4), y = c(7, 8, 9))
+
+# use merge to combine the data frames based on the "id" column
+merged_df <- merge(df1, df2, by = "id")
+merged_df
+```
+
+The function `apply()` can be used to apply a function to rows or columns of a data frame. In this example, the code applies the sum function to each row of the data frame, if you wanted to sum each column you can change (1) to (2).
+
+```{r}
+# create a sample data frame
+df <- data.frame(x = c(1, 2, 3), 
+                 y = c(4, 5, 6), 
+                 z = c(7, 8, 9))
+
+# use apply to calculate the row sums
+row_sums <- apply(df, 1, sum)
+row_sums
+```
+
+The `tapply()` function can be used to apply a function to subsets of a data frame defined by one or more variables. Here's an example of using `tapply()` to calculate the mean of a variable for each level of a grouping variable.
+
+```{r}
+# create a sample data frame
+df <- data.frame(x = c(1, 2, 3, 4), 
+                 y = c(5, 6, 7, 8), 
+                 group = c("A", "A", "B", "B"))
+
+# use tapply to calculate the mean of y for each group
+mean_by_group <- tapply(df$y, df$group, mean)
+mean_by_group
+```
+
+Another function from the apply environment is `lapply()`. This function can be used to apply a function to each column of a data frame and return a list of the results. Here's an example of using `lapply()` to calculate the range of values for each column of a data frame:
+
+```{r}
+# create a sample data frame
+df <- data.frame(x = c(1, 2, 3), 
+                 y = c(4, 5, 6), 
+                 z = c(7, 8, 9))
+
+# use lapply to calculate the range of values for each column
+range_by_col <- lapply(df, range)
+range_by_col
+```
+
+If you want to simply the output to a vector (or matrix if possible) you can use the `sapply()` function. In this example we calculate the mean of each column of a data frame:
+
+```{r}
+# create a sample data frame
+df <- data.frame(x = c(1, 2, 3), 
+                 y = c(4, 5, 6), 
+                 z = c(7, 8, 9))
+
+# use sapply to calculate the mean of each column
+mean_by_col <- sapply(df, mean)
+mean_by_col
+```
+
+If you want to change the column names, you can use the `colnames()` function like in this example:
+
+```{r}
+# Create a sample data frame
+df <- data.frame(x = c(1, 2, 3), 
+                 y = c(4, 5, 6))
+
+# Set column names to be "Var1" and "Var2"
+colnames(df) <- c("Var1", "Var2")
+
+# Print the data frame with column names changed
+df
+```
+
+You can also change the row names with the `rownames()` function as displayed here:
+
+```{r}
+# Create a sample data frame
+df <- data.frame(x = c(1, 2, 3), 
+                 y = c(4, 5, 6))
+
+# Set row names to be "A", "B", and "C"
+row.names(df) <- c("A", "B", "C")
+
+# Print the data frame with row names changed
+df
+```
+
+### Moving to the tidyverse
+
+The `tidyverse` is a collection of R packages that are designed to work together to make data analysis more efficient and intuitive. The packages in the `tidyverse` include:
+
+-   `ggplot2` for creating visualizations
+-   `dplyr` for data manipulation
+-   `tidyr` for reshaping data
+-   `readr` for importing data
+-   `purrr` for functional programming
+-   `tibble` for creating data frames
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+In the `tidyverse` something very useful is the pipe operator: `%>%`, it allows you to chain together multiple functions in a way that makes the code easier to read and understand. It works by taking the output of one function and passing it as the first argument to the next function in the chain. This eliminates the need to create intermediate variables to store the output of each function, and makes it easier to write code that is both concise and expressive.
+
+#### The `readr` package
+
+This package provides a fast and friendly way to read in flat files, including CSV, TSV, and fixed-width files. It is designed to be faster and more memory-efficient than the base R functions for reading in data.
+
+The package provides several functions for reading in data, including:
+
+-   `read_csv()`: for reading in CSV files
+-   `read_tsv()`: for reading in TSV files
+-   `read_delim()`: for reading in files with a delimiter of your choice
+-   `read_fwf()`: for reading in fixed-width files
+
+These functions are designed to be fast and memory-efficient, and they also automatically detect and handle a wide range of data formats and encodings.
+
+One of the key features of `readr` is its ability to automatically detect the types of columns in your data, such as numeric, character, or date/time columns. However, if you have specific requirements for the types of columns in your data, you can also specify the column types manually using the `col_types` argument.
+
+For example, if you want to specify that the second column in your data is a character column and the fourth column is a numeric column, you can do:
+
+```{r, eval=FALSE}
+my_data <- read_csv("my_data.csv", col_types = cols(
+  col2 = col_character(),
+  col4 = col_double()
+))
+```
+
+`readr` provides several options for handling missing values in your data. By default, `readr` will treat any value that is empty or matches the string "NA" as a missing value.
+
+You can also specify additional strings to be treated as missing values using the `na` argument. For example, if you want to treat the string "MISSING" as a missing value, you can do:
+
+```{r, eval=FALSE}
+my_data <- read_csv("my_data.csv", na = c("NA", "MISSING"))
+```
+
+#### The `dplyr` package
+
+`dplyr` is a powerful and widely-used package in R for data manipulation. It provides a concise and consistent syntax for transforming data sets, which allows you to easily filter, arrange, summarize, and join data.
+
+Here's a brief overview of the main functions in `dplyr`:
+
+-   `select()`: Allows you to select specific columns from a data set, using a simple syntax that includes the column names separated by commas.
+-   `filter()`: Allows you to select specific rows from a data set based on a set of conditions, using a simple syntax that includes logical operators such as `==`, `>`, `<`, etc.
+-   `arrange()`: Allows you to sort a data set based on one or more columns, using a simple syntax that includes the column names separated by commas, with optional modifiers like `desc()` for descending order.
+-   `mutate()`: Allows you to create new columns in a data set based on calculations or transformations of existing columns, using a simple syntax that includes the name of the new column followed by an equals sign (`=`) and the calculation or transformation expression.
+-   `summarize()`: Allows you to aggregate data by computing summary statistics such as mean, median, count, etc., using a simple syntax that includes the summary function name followed by the name of the column to be summarized.
+-   `group_by()`: Allows you to group a data set by one or more columns, which is often used in conjunction with `summarize()` to compute summary statistics for each group.
+-   `join()`: Allows you to combine two or more data sets based on common columns, using a simple syntax that includes the names of the data sets and the columns to be joined on.
+
+Here's an example of how to use `dplyr` to perform some common data manipulation tasks:
+
+```{r}
+library(dplyr)
+
+# load a sample data set
+my_data <- iris
+
+# select specific columns
+my_data <- select(my_data, Sepal.Length, Sepal.Width, Species)
+
+# filter rows based on a condition
+my_data <- filter(my_data, Sepal.Length > 5)
+
+# arrange data by a column
+my_data <- arrange(my_data, Sepal.Length)
+
+# create a new column based on an existing one
+my_data <- mutate(my_data, Sepal.Area = Sepal.Length * Sepal.Width)
+
+# summarize data by a column
+my_summary <- summarise(my_data, Mean.Sepal.Length = mean(Sepal.Length))
+
+# group data by a column and summarize
+my_summary2 <- my_data %>%
+  group_by(Species) %>%
+  summarise(Mean.Sepal.Length = mean(Sepal.Length))
+
+# join two data sets
+my_data2 <- data.frame(Species = c("setosa", "versicolor", "virginica"),
+                       Petal.Length = c(1.4, 4.2, 6.0))
+my_data <- left_join(my_data, my_data2, by = "Species")
+```
+
+In this example, we load the `iris` data set, which contains information about flowers, and use various `dplyr` functions to select specific columns, filter rows based on a condition, arrange the data by a column, create a new column based on an existing one, summarize the data by a column, group the data by a column and summarize, and join two data sets based on a common column.
+
+Overall, `dplyr` provides a powerful and flexible set of tools for data manipulation in R, and is a key package to have in your data science toolkit.
+
+#### The `tidyr` package
+
+The `tidyr` package is a data manipulation package in R that provides functions for reshaping and tidying data sets. It is a complementary package to `dplyr`, which focuses on manipulating data sets by filtering, summarizing, and transforming variables.
+
+The `gather()` function is used to reshape a data frame from a wide format to a long format. It does this by taking multiple columns and "gathering" them into a key-value pair format. For example, if you have a data frame with columns for year, quarter, and sales for each quarter, you can use `gather()` to reshape it into a format where each row represents a year-quarter combination and the sales value is in a single column.
+
+```{r}
+# create example data frame
+df <- data.frame(year = c(2018, 2019),
+                 q1_sales = c(100, 200),
+                 q2_sales = c(150, 250),
+                 q3_sales = c(175, 300),
+                 q4_sales = c(200, 350))
+
+# reshape data frame
+df2 <- gather(df, key = "quarter", value = "sales", -year)
+```
+
+The function `spread()` is the opposite of `gather()`. It is used to reshape a data frame from a long format to a wide format. It does this by taking a key-value pair and "spreading" the values across multiple columns. For example, if you have a data frame with columns for year, quarter, and sales, where each row represents a year-quarter combination, you can use `spread()` to reshape it into a format where each row represents a year and there is a column for each quarter's sales value.
+
+```{r}
+# create example data frame
+df <- data.frame(month = c("Jan", "Feb", "Mar", "Jan", "Feb", "Mar"),
+                 year = c(2018, 2018, 2018, 2019, 2019, 2019),
+                 rainfall = c(50, 75, 100, 60, 80, 110))
+
+# reshape data frame
+df2 <- spread(df, key = "month", value = "rainfall")
+```
+
+The `separate()` function is used to split a single column into multiple columns based on a delimiter or a fixed number of characters. For example, if you have a data frame with a column for name that contains both first and last names, you can use `separate()` to split the column into two columns.
+
+```{r}
+# create example data frame
+df <- data.frame(name = c("John Smith", "Jane Doe", "Bob Johnson"))
+
+# separate name column into first and last name columns
+df2 <- separate(df, col = name, into = c("first_name", "last_name"), sep = " ")
+```
+
+The function `unite()` is the opposite of `separate()`. It is used to combine multiple columns into a single column by concatenating them with a delimiter. For example, if you have a data frame with separate columns for first and last names, you can use `unite()` to combine them into a single column.
+
+```{r}
+# create example data frame
+df <- data.frame(first_name = c("John", "Jane", "Bob"),
+                 last_name = c("Smith", "Doe", "Johnson"))
+
+# combine first and last name columns into a single name column
+df2 <- unite(df, col = "name", first_name, last_name, sep = " ")
+```
+
+The `fill()` function is used to fill in missing values in a data frame. It does this by filling in missing values with the most recent non-missing value in the same column. For example, if you have a data frame with a column for price that has missing values, you can use `fill()` to fill in those missing values with the most recent non-missing price value.
+
+```{r}
+# create example data frame
+df <- data.frame(date = c("2022-01-01", "2022-01-02", "2022-01-03", "2022-01-04"),
+                 price = c(100, NA, 150, NA))
+
+# fill in missing values with most recent non-missing value
+df2 <- fill(df, price)
+df2
+```
+
+`drop_na()` is a useful function when we have a data frame with missing values, and we want to remove any rows that contain missing values.
+
+```{r}
+# create example data frame
+df <- data.frame(id = 1:5,
+                 name = c("John", NA, "Bob", "Jane", "Bill"),
+                 age = c(30, 25, NA, 40, 35))
+
+# drop any rows that contain missing values
+df2 <- drop_na(df)
+```
+
+Overall, `tidyr` is a powerful package that provides a range of functions for tidying and reshaping data frames. It is a key component in the "tidyverse" of packages in R that are designed to work together to provide a consistent and efficient data analysis workflow.
+
+#### The `tibble` package
+
+The `tibble` package is an alternative to R's built-in `data.frame` object. It is designed to be more user-friendly and to make working with data frames easier. Some of the key features of tibble include:
+
+-   Printing: `tibble` objects print nicely to the console, making them easier to read.
+-   Error messages: `tibble` objects have improved error messages that provide more context than the default `data.frame` error messages.
+-   Subsetting: `tibble` objects behave more consistently than `data.frame` objects when subsetting.
+-   Column types: `tibble` objects preserve column types better than `data.frame` objects.
+
+Here is an example of how to create and work with a `tibble` object:
+
+```{r}
+# create a tibble with three columns
+my_data <- tibble(
+  name = c("Alice", "Bob", "Charlie"),
+  age = c(25, 30, 35),
+  has_pet = c(TRUE, FALSE, TRUE)
+)
+
+# print the tibble to the console
+my_data
+
+# filter the tibble to only include people with pets
+my_data_with_pets <- filter(my_data, has_pet == TRUE)
+
+# add a new column to the tibble
+my_data_with_pets <- mutate(my_data_with_pets, pet_type = c("dog", "cat"))
+
+# print the modified tibble to the console
+my_data_with_pets
+```
+
+In this example, we create a `tibble` object called `my_data` with three columns: `name`, `age`, and `has_pet`. We then print the `tibble` to the console, which shows the nicely formatted output. We use `filter()` to create a new `tibble` called `my_data_with_pets` that only includes rows where `has_pet` is `TRUE`. We then use `mutate()` to add a new column called `pet_type` to `my_data_with_pets`. Finally, we print the modified `tibble` to the console, which shows the added `pet_type` column.
+
+#### Other packages
+
+`ggplot2` is an R package for data visualization that is based on the grammar of graphics, which provides a consistent framework for building graphics by breaking them down into components. The package allows for a high degree of flexibility and customization, allowing users to create a wide range of visualizations, from simple scatterplots to complex multi-layered graphics. `ggplot2` works by mapping data to aesthetic properties of the plot, such as color, shape, and size, and then layering geometric objects, such as points, lines, and bars, on top of this mapping. This allows for easy manipulation and comparison of different aspects of the data. The package also provides many tools for modifying and fine-tuning the appearance of the plot, such as changing axis labels and limits, adjusting colors and themes, and adding annotations. Overall, `ggplot2` is a powerful and flexible tool for creating high-quality visualizations in R. We will dive deeper in `ggplot2` in a future chapter.
+
+The other `tydiverse` package not aforementioned is the `purrr` package. It is a powerful and flexible package for working with functions and vectors in R. It provides a consistent set of tools for manipulating and transforming data in a functional programming style. Some of the key features of `purrr` include the ability to work with functions in a more flexible way, including functions with multiple arguments and complex inputs, as well as the ability to apply functions to data in a variety of ways, such as mapping over lists and data frames. `purrr` also provides many functions for working with vectors, including tools for filtering, grouping, and reshaping data, as well as for handling missing values and dealing with errors. Overall, `purrr` is a powerful and flexible package that provides a consistent and functional approach to working with data in R.
+
+## Statistical analysis
+
+In this chapter we will focus on statistical tests, how to use them but also interpret them.
+
+### Test for normality and transformations
+
+In statistical analysis, it is often essential to check whether a dataset follows a normal distribution before applying certain parametric tests. R provides various tools to assess the normality of data and apply transformations if necessary. In this section, we will explore some common methods to test for normality and demonstrate how to perform data transformations.
+
+#### Shapiro-Wilk Test
+
+The Shapiro-Wilk test is a popular method to assess normality. It tests the null hypothesis that a sample is drawn from a normally distributed population. We can use the `shapiro.test()` function in R to perform this test. Let's see an example:
+
+```{r}
+# Generate a random sample from a normal distribution
+set.seed(123)
+normal_sample <- rnorm(100)
+
+# Perform Shapiro-Wilk test
+shapiro.test(normal_sample)
+```
+
+#### Histogram and Q-Q Plot
+
+Another visual approach to check for normality is by creating a histogram and a quantile-quantile (Q-Q) plot of the data. The histogram provides a rough representation of the data's distribution, while the Q-Q plot compares the quantiles of the data to the quantiles of a theoretical normal distribution. If the points on the Q-Q plot fall approximately along a straight line, it suggests the data is normally distributed. Here's an example:
+
+```{r}
+# Generate a random sample from a non-normal distribution
+set.seed(456)
+non_normal_sample <- rgamma(100, shape = 2, rate = 1)
+
+# Create a histogram
+hist(non_normal_sample, main = "Histogram of Non-Normal Data")
+
+# Create a Q-Q plot
+qqnorm(non_normal_sample)
+qqline(non_normal_sample, col = "red")
+```
+
+#### Data Transformation
+
+If the data significantly deviates from normality, we can try applying transformations to make it approximately normal. Common transformations include logarithmic, square root, and reciprocal transformations. Let's apply a logarithmic transformation to our non-normal data and re-check for normality:
+
+```{r}
+# Apply logarithmic transformation
+log_transformed_data <- log(non_normal_sample)
+
+# Create a histogram of transformed data
+hist(log_transformed_data, main = "Histogram of Log-Transformed Data")
+
+# Create a Q-Q plot of transformed data
+qqnorm(log_transformed_data)
+qqline(log_transformed_data, col = "red")
+
+# Perform Shapiro-Wilk test on transformed data
+shapiro.test(log_transformed_data)
+```
+
+Remember that data transformations should be applied judiciously and be interpreted cautiously in the context of your specific analysis.
+
+In conclusion, R offers powerful tools to assess the normality of data and apply appropriate transformations to meet the assumptions of parametric tests. Always validate the results and consider the specific requirements of your analysis before making any conclusions based on the normality tests and transformations.
+
+### The Chi-square test of independence
+
+The Chi-square test of independence is a fundamental statistical method used to determine whether there is a significant association between two categorical variables. It is applicable when we have two or more categorical variables, and we want to investigate if they are dependent or independent of each other. The test assesses whether the observed frequencies in a contingency table differ significantly from the frequencies we would expect under the assumption of independence between the variables.
+
+Let's go through an example using R to illustrate the Chi-square test of independence.
+
+Suppose we have survey data on the preference for ice cream flavors among two groups of people: Group A and Group B. The data is organized in a contingency table:
+
+```{r, echo=FALSE}
+# Create the contingency table
+ice_cream_table <- matrix(c(25, 15, 10, 30, 20, 25), nrow = 2, byrow = TRUE,
+                          dimnames = list(c("Group A", "Group B"),
+                                          c("Vanilla", "Chocolate", "Strawberry")))
+```
+
+`r knitr::kable(ice_cream_table)`
+
+We can use the `chisq.test()` function in R to perform the Chi-square test:
+
+```{r}
+# Create the contingency table
+ice_cream_table <- matrix(c(25, 15, 10, 30, 20, 25), nrow = 2, byrow = TRUE,
+                          dimnames = list(c("Group A", "Group B"),
+                                          c("Vanilla", "Chocolate", "Strawberry")))
+
+# Perform the Chi-square test
+chi_sq_result <- chisq.test(ice_cream_table)
+print(chi_sq_result)
+```
+
+The test will provide us with a chi-square statistic and a p-value. If the p-value is below a predetermined significance level (often set at 0.05), we reject the null hypothesis of independence and conclude that there is a significant association between the two categorical variables. Conversely, if the p-value is greater than 0.05, we fail to reject the null hypothesis, suggesting that there is no significant association between the variables.
+
+In summary, the Chi-square test of independence is a valuable tool to assess the relationship between categorical variables. It is commonly used in various fields, including social sciences, medicine, marketing, and more, to gain insights into the associations between different groups and make informed decisions based on the observed data.
+
+### Correlation tests
+
+Correlation tests are essential statistical techniques used to assess the strength and direction of the relationship between two continuous variables. In R, we can employ various correlation tests to determine if there is a significant linear association between the variables. Two commonly used correlation tests are the Pearson correlation coefficient and the Spearman rank correlation coefficient.
+
+#### Pearson Correlation Coefficient
+
+The Pearson correlation coefficient, also known as Pearson's r, measures the linear relationship between two continuous variables. It ranges from -1 to 1, where -1 indicates a perfect negative linear relationship, 1 indicates a perfect positive linear relationship, and 0 suggests no linear relationship. The `cor()` function in R can be used to compute Pearson's correlation coefficient. Here's an example:
+
+```{r}
+# Generate sample data
+set.seed(789)
+variable1 <- rnorm(100)
+variable2 <- rnorm(100)
+
+# Calculate Pearson correlation
+cor(variable1, variable2, method = "pearson")
+```
+
+#### Spearman Rank Correlation Coefficient
+
+The Spearman rank correlation coefficient assesses the strength and direction of a monotonic relationship between two variables. It is suitable for variables that may not have a linear relationship but exhibit a consistent monotonic trend. The `cor()` function with `method = "spearman"` can be used to compute Spearman's correlation coefficient. Here's an example:
+
+```{r}
+# Generate sample data
+set.seed(987)
+variable3 <- runif(100)
+variable4 <- runif(100)
+
+# Calculate Spearman correlation
+cor(variable3, variable4, method = "spearman")
+```
+
+In both cases, the correlation tests will produce a correlation coefficient and a p-value. The p-value indicates the statistical significance of the correlation. A p-value less than the chosen significance level (often 0.05) suggests that the correlation is statistically significant.
+
+Understanding the relationship between variables is crucial in data analysis and can provide valuable insights for decision-making and model building. Correlation tests help us quantify the association between variables, enabling us to make informed conclusions about their interdependence in the dataset.
+
+### Linear regression
+
+Linear regression is a powerful statistical technique used to model the relationship between a dependent variable and one or more independent variables. It is widely employed in various fields, including economics, social sciences, and machine learning. In R, we can use the `lm()` function to perform linear regression and estimate the coefficients of the regression equation. Let's explore three aspects of linear regression: simple linear regression, multiple linear regression, and variable selection with model comparison.
+
+#### Simple linear regression
+
+Simple linear regression involves modeling the relationship between two continuous variables: a dependent variable and a single independent variable. It assumes that the relationship can be approximated by a straight line equation ($y = mx + b$), where $y$ represents the dependent variable, $x$ is the independent variable, $m$ is the slope, and $b$ is the intercept. We can use the `lm()` function to perform simple linear regression in R. Here's an example:
+
+```{r}
+# Generate sample data
+set.seed(456)
+independent_var <- rnorm(100)
+dependent_var <- 2 * independent_var + rnorm(100)
+
+# Perform simple linear regression
+simple_lm_result <- lm(dependent_var ~ independent_var)
+summary(simple_lm_result)
+```
+
+The output of the `summary()` function will provide information about the following key components:
+
+1.  Coefficients Table:\
+    The coefficients table shows the estimated regression coefficients for the intercept (`(Intercept)`) and the independent variable (`independent_var`). The coefficient estimates represent the change in the dependent variable (`dependent_var`) for a one-unit increase in the independent variable while holding other variables constant.
+
+2.  Standard Error:\
+    The standard error is an estimate of the variability or uncertainty associated with the coefficient estimates. Smaller standard errors indicate more precise estimates.
+
+3.  t-value:\
+    The t-value measures how many standard errors the coefficient estimate is away from zero. It is used to test the null hypothesis that the true coefficient is zero (i.e., no relationship between the independent and dependent variables). A high t-value indicates a significant relationship between the variables.
+
+4.  Pr(\>\|t\|):\
+    The p-value associated with the t-value. It indicates the probability of observing the t-value or more extreme values under the null hypothesis. A p-value below the chosen significance level (often 0.05) suggests a statistically significant relationship.
+
+5.  Residual Standard Error (RSE):\
+    The residual standard error is an estimate of the standard deviation of the residuals (the differences between the observed and predicted values). It measures the goodness of fit of the model - smaller RSE indicates a better fit.
+
+6.  R-squared (R^2^):\
+    The R-squared value represents the proportion of variance in the dependent variable explained by the independent variable(s). It ranges from 0 to 1, with higher values indicating a better fit. For simple linear regression, R-squared is equal to the square of the correlation coefficient between the dependent and independent variables.
+
+#### Multiple linear regression
+
+Multiple linear regression extends the concept of simple linear regression to include multiple independent variables. It models the relationship between a dependent variable and two or more independent variables, assuming a linear combination of these variables to predict the dependent variable. The `lm()` function can also be used for multiple linear regression. Let's see an example:
+
+```{r}
+# Generate sample data
+set.seed(789)
+independent_var1 <- rnorm(100)
+independent_var2 <- rnorm(100)
+dependent_var_multiple <- 2 * independent_var1 + 3 * independent_var2 + rnorm(100)
+
+# Perform multiple linear regression
+multiple_lm_result <- lm(dependent_var_multiple ~ independent_var1 + independent_var2)
+summary(multiple_lm_result)
+```
+
+The `summary()` output provides coefficient estimates for each independent variable, along with their standard errors, t-values, and p-values. Additionally, it gives an overall assessment of the model's fit.
+
+The summary table for multiple linear regression is similar to the one for simple linear regression. However, in multiple linear regression, the coefficients table will contain estimates for each independent variable, along with the intercept.
+
+Additionally, you will find the following:
+
+1.  Multiple R-squared:\
+    The multiple R-squared (R^2^) indicates the proportion of variance in the dependent variable explained by all the independent variables in the model.
+
+2.  Adjusted R-squared:\
+    The adjusted R-squared adjusts the multiple R-squared value based on the number of independent variables and the sample size. It penalizes the addition of unnecessary variables to prevent overfitting. A higher adjusted R-squared suggests a better-fitting model.
+
+The `summary()` output also includes information on residuals and various diagnostics that can be useful for evaluating the model's assumptions and checking for potential issues like heteroscedasticity or influential outliers.
+
+Remember that while the summary table provides useful information about the model, it is essential to consider other diagnostic plots and statistical tests to ensure the model's validity and interpret the results properly.
+
+#### Variable selection and model comparison
+
+In linear regression, selecting the most relevant independent variables is essential to build a robust and interpretable model. There are various approaches to perform variable selection, such as forward selection, backward elimination, and stepwise regression. Additionally, model comparison helps us evaluate different models and choose the best-fit model based on several metrics, including R-squared, adjusted R-squared, AIC (Akaike Information Criterion), and BIC (Bayesian Information Criterion).
+
+Let's consider a dataset with multiple potential independent variables. We can use different variable selection techniques to identify the subset of variables that contribute most significantly to the model. In this example, we'll use the `step()` function in R to perform a stepwise regression for variable selection:
+
+```{r}
+# Load necessary library for stepwise regression
+library(MASS)
+
+# Generate sample data
+set.seed(123)
+independent_var1 <- rnorm(100)
+independent_var2 <- rnorm(100)
+dependent_var <- 3 * independent_var1 + 2 * independent_var2 + rnorm(100)
+
+# Perform stepwise regression for variable selection
+model <- lm(dependent_var ~ independent_var1 + independent_var2)
+selected_model <- step(model)
+summary(selected_model)
+```
+
+The `step()` function will perform a stepwise selection and provide the final selected model with the most significant variables.
+
+Once we have multiple candidate models, we need to evaluate their performance to choose the best one. Several metrics can be used for model comparison:
+
+**R-squared (R\^2)**
+
+R-squared measures the proportion of the variance in the dependent variable that is explained by the independent variables in the model. A higher R-squared value indicates a better fit of the model to the data.
+
+```{r}
+# Calculate R-squared for the selected model
+rsquared <- summary(selected_model)$r.squared
+print(paste("R-squared:", round(rsquared, 3)))
+```
+
+**Adjusted R-squared (R\^2_adj)**
+
+Adjusted R-squared is a modified version of R-squared that considers the number of independent variables in the model. It penalizes the inclusion of irrelevant variables, providing a more realistic assessment of model fit.
+
+```{r}
+# Calculate Adjusted R-squared for the selected model
+rsquared_adj <- summary(selected_model)$adj.r.squared
+print(paste("Adjusted R-squared:", round(rsquared_adj, 3)))
+```
+
+**Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC)**
+
+AIC and BIC are information criteria that balance the goodness of fit with model complexity. Lower AIC and BIC values indicate a better model fit with fewer variables, making them useful for model comparison.
+
+```{r}
+aic <- AIC(selected_model)
+print(paste("AIC:", round(aic, 3)))
+bic <- BIC(selected_model)
+print(paste("BIC:", round(bic, 3)))
+```
+
+By comparing these metrics across different candidate models, we can select the model that provides the best trade-off between goodness of fit and simplicity, ensuring a reliable representation of the relationship between the variables.
+
+In conclusion, variable selection and model comparison are critical steps in building an effective linear regression model. Properly selected models, based on meaningful metrics such as R-squared, adjusted R-squared, AIC, and BIC, can lead to better insights and more accurate predictions. Always interpret the results with caution and consider the context and assumptions of the analysis.
+
+#### Validity of the model
+
+Linear regression makes several assumptions about the data, such as :
+
+-   Linearity of the data. The relationship between the predictor (x) and the outcome (y) is assumed to be linear.
+
+-   Normality of residuals. The residual errors are assumed to be normally distributed.
+
+-   Homogeneity of residuals variance. The residuals are assumed to have a constant variance (homoscedasticity)
+
+-   Independence of residuals error terms.
+
+**Diagnostic Plot: Q-Q Plot**
+
+The Q-Q (quantile-quantile) plot helps us assess the assumption of normality in the residuals. If the residuals follow a normal distribution, the points on the Q-Q plot should approximately fall along a straight line.
+
+```{r}
+# Create a Q-Q plot of residuals
+qqnorm(simple_lm_result$residuals, main = "Q-Q Plot of Residuals")
+qqline(simple_lm_result$residuals, col = "red")
+```
+
+**Statistical Test: Shapiro-Wilk Test**
+
+To complement the Q-Q plot, we can perform the Shapiro-Wilk test to formally test for the normality of the residuals. The null hypothesis is that the residuals are normally distributed. A significant p-value (p \< 0.05) indicates a departure from normality.
+
+```{r}
+# Shapiro-Wilk test for normality of residuals
+shapiro_test <- shapiro.test(simple_lm_result$residuals)
+print(shapiro_test)
+```
+
+**Statistical Test: Durbin-Watson Test**
+
+The Durbin-Watson test is used to detect autocorrelation in the residuals. Autocorrelation occurs when the residuals are correlated with their own lagged values. The Durbin-Watson test statistic ranges from 0 to 4, where a value around 2 indicates no autocorrelation. Values significantly below 2 indicate positive autocorrelation, and values above 2 indicate negative autocorrelation.
+
+```{r}
+# Durbin-Watson test for autocorrelation in residuals
+library(lmtest)
+dw_test <- dwtest(simple_lm_result)
+print(dw_test)
+```
+
+**Diagnostic Plot: Residual Plot**
+
+A residual plot helps us check for the assumption of homoscedasticity, which assumes that the variance of the residuals is constant across all levels of the independent variable. We plot the residuals against the fitted values (predicted values) and look for patterns. If the plot shows a constant spread with no apparent pattern, it indicates that the model meets the assumption.
+
+```{r}
+# Create a residual plot
+plot(simple_lm_result$fitted.values, simple_lm_result$residuals,
+     main = "Residual Plot", xlab = "Fitted Values", ylab = "Residuals")
+abline(h = 0, col = "red", lwd = 2)
+```
+
+**Statistical Test: Breusch-Pagan Test (for Homoscedasticity)**
+
+The Breusch-Pagan test is used to test for the assumption of homoscedasticity. The null hypothesis is that the variance of the residuals is constant (homoscedastic). A significant p-value suggests the presence of heteroscedasticity.
+
+```{r}
+# Breusch-Pagan test for homoscedasticity
+bp_test <- bptest(simple_lm_result)
+print(bp_test)
+```
+
+Remember that diagnostic plots and statistical tests should be used as tools to assess the model's validity and identify potential issues. It is crucial to interpret the results in conjunction with domain knowledge and the specific context of the analysis. Addressing any deviations from assumptions may involve data transformation or choosing a different model to improve the model's performance and reliability.
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+This is still a work in progress...
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### Generalized linear model
+
+```{r}
+
+```
+
+### ANOVA
+
+#### One factor
+
+```{r}
+
+```
+
+#### Two factors
+
+```{r}
+
+```
+
+### ANCOVA
+
+```{r}
+
+```
+
+### PCA
+
+```{r}
+
+```
+
+### Distance matrix and classification
+
+```{r}
+
+```
+
+### DAPC
+
+```{r}
+
+```
+
+## Graphical visualisation
+
+### Base R
+
+### ggplot2
+
+## Programming in R
+
+Consequat elit laborum id eiusmod nisi ut minim officia. Tempor non consectetur veniam sit nisi nostrud Lorem minim quis amet anim duis. Sunt deserunt excepteur velit. Ipsum elit ullamco nostrud ad veniam et.
+
+Deserunt aute proident commodo nostrud. Esse veniam et duis ipsum adipisicing dolor incididunt. Labore deserunt anim commodo. Magna Lorem consectetur excepteur aliquip qui voluptate nulla velit Lorem Lorem minim nulla.
+
+## Reproducibility {.appendix}
+
+```{r, echo=FALSE}
+sessionInfo()
+```
+
+## Note {.appendix}
+
+*The writing process was conducted with the help of [ChatGPT (OpenAI)](https://openai.com/).*

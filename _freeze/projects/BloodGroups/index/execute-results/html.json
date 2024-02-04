@@ -1,0 +1,14 @@
+{
+  "hash": "60adb6309f32de7cee202bb0d46dc637",
+  "result": {
+    "markdown": "---\ntitle: \"Poster: \\\"Blood groups systems polymorphism in Papua New-Guinea\\\"\"\nauthor: \"Benjamin TOURNAN\"\ndate: \"2023-06-15\"\nimage: \"blood.png\"\ntoc: false\nabstract: |\n  The discovery of human blood groups in the early 20th century significantly advanced transfusion medicine. These groups were also among the first biological markers used to reconstruct the population history of New Guinea in the early 1920s. Recent advances in whole genome sequencing has allowed accurate blood group phenotyping and genotyping (43 blood group systems involving 48 genes and 1500 alleles), and in parallel has revealed that New Guineans harbor one of the greatest genetic diversities on the planet. However, blood group genomic profiles in New Guineans, their geographic distribution and their link to pathogenic pressure (i.e. malaria) is understudied. Using these new genomic resources, this study describes the blood group diversity from 150 whole genome sequences from 18 provinces in Papua New Guinea. We found that there is a strong geographic structuration based on the 72 blood group variants identified. In addition, our results suggest a link between some alleles and the presence of the malaria causing parasites (*P. falciparum* and *P. vivax*) – some of these alleles being potentially inherited from Neanderthal and Denisovan.<br>Our study shows the potential of genomic blood group profiling to better understand the interaction between blood groups, environment and population history in Papua New Guinea.\n\n---\n\n\nThis is a post with executable code.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

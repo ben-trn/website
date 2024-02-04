@@ -1,0 +1,31 @@
+{
+    "id": "5EA3DDE5",
+    "path": "~/Documents/website/projects/RMastery/index.qmd",
+    "project_path": "projects/RMastery/index.qmd",
+    "type": "quarto_markdown",
+    "hash": "1920319688",
+    "contents": "",
+    "dirty": false,
+    "created": 1704048227358.0,
+    "source_on_save": true,
+    "relative_order": 5,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "0,0",
+        "scrollLine": "0",
+        "rmdVisualMode": "true",
+        "rmdVisualWrapConfigured": "true",
+        "docOutlineVisible": "0",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "2:0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1705958933,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1705958933651,
+    "read_only": false,
+    "read_only_alternatives": []
+}

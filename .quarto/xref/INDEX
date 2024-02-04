@@ -1,0 +1,32 @@
+{
+  "index.qmd": {
+    "index.html": "bc04261d"
+  },
+  "about.qmd": {
+    "about.html": "d560b114"
+  },
+  "projects.qmd": {
+    "projects.html": "760243db"
+  },
+  "R_mastery.qmd": {
+    "R_mastery.html": "8c231400"
+  },
+  "projects/post-with-code/index.qmd": {
+    "index.html": "e1e00880"
+  },
+  "projects/RMastery/index.qmd": {
+    "index.html": "5d6aba21"
+  },
+  "projects/Yersinia/index.qmd": {
+    "index.html": "ec2ae18c"
+  },
+  "projects/BloodGroups/index.qmd": {
+    "index.html": "092604c1"
+  },
+  "projects/Yersinia pestis/index.qmd": {
+    "index.html": "279af2c1"
+  },
+  "projects/Yersinia_pestis/index.qmd": {
+    "index.html": "6c261f3d"
+  }
+}

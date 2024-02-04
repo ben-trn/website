@@ -1,0 +1,38 @@
+---
+title: "Projects"
+toc: false
+sidebar: false
+listing:
+  contents: projects
+  type: grid
+  fields: [image, title]
+  grid-item-border: false
+  grid-item-align: center
+  image-height: "1"
+  grid-columns: 3
+  sort: "date desc"
+---
+<p style="margin-bottom: 30px;"> Throughout my academic journey, I have undertaken and participated in numerous projects, some of which are showcased on this page. The first project entails a comprehensive document summarizing my proficiency in statistics, data visualization, and programming using R. The second project is a poster created to conclude my first-year master's internship. The final project, a collaborative effort between my two colleagues and me during the second year of our master's program, is a Shiny dashboard describing the genomic and historical aspects of the second *Yersinia pestis* pandemic in Europe.</p>
+
+<!-- ::: grid -->
+<!-- ::: g-col-4 -->
+<!-- <div style="text-align: center; margin-top: 20px;"> -->
+<!--   <img src="resources/1_RMASTERY.png" alt="R Mastery project Logo" width="80%" style="max-width: 300px; margin-bottom: 10px;"> -->
+<!--   <p style="margin-top: 10px;">R Mastery: a comprehensive guide</p> -->
+<!-- </div> -->
+<!-- ::: -->
+
+<!-- ::: g-col-4 -->
+<!-- <div style="text-align: center; margin-top: 20px;"> -->
+<!--   <img src="resources/2_BLOOD.png" alt="Blood Groups project Logo" width="80%" style="max-width: 300px; margin-bottom: 10px;"> -->
+<!--   <p style="margin-top: 10px;">Poster: "Blood groups systems polymorphism in Papua New-Guinea"</p> -->
+<!-- </div> -->
+<!-- ::: -->
+
+<!-- ::: g-col-4 -->
+<!-- <div style="text-align: center; margin-top: 20px;"> -->
+<!--   <img src="resources/3_YERSINIA.png" alt="Yersinia pestis project Logo" width="80%" style="max-width: 300px; margin-bottom: 10px;"> -->
+<!--   <p style="margin-top: 10px;">*Yersinia pestis* dashboard</p> -->
+<!-- </div> -->
+<!-- ::: -->
+<!-- ::: -->

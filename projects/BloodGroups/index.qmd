@@ -1,0 +1,42 @@
+---
+title: "Poster: \"Blood groups systems polymorphism in Papua New-Guinea\""
+author:
+  - name: Benjamin TOURNAN
+    email: benjamin.tournan@univ-tlse3.fr
+  - name: Adeline MOREZ
+  - name: Stéphane MAZIÈRES
+  - name: Christopher KINIPI
+  - name: Matthew LEAVESLEY
+  - name: Nicolas BRUCATO
+  - name: François-Xavier RICAUT
+# author: 
+#   - name: Benjamin TOURNAN
+#     affiliations: 
+#       - name: Laboratoire Évolution and Diversité Biologique (EDB UMR5174), Université de Toulouse Midi-Pyrénées, CNRS, IRD, UPS, Toulouse, France
+#   - name: Adeline MOREZ
+#     affiliations: Laboratoire Évolution and Diversité Biologique (EDB UMR5174), Université de Toulouse Midi-Pyrénées, CNRS, IRD, UPS, Toulouse, France
+#   - name: Stéphane MAZIÈRES
+#     affiliations: UMR7268 ADES Anthropologie Bioculturelle Droit Ethique et Santé Aix-Marseille Université - Campus Timone, France
+#   - name: Christopher KINIPI
+#     affiliations: Medical Clinic, University of Papua New Guinea, Port Moresby, Papua New Guinea
+#   - name: Matthew LEAVESLEY
+#     affiliations: Strand of Anthropology, Sociology and Archaeology, School of Humanities and Social Sciences, University of Papua New Guinea, National Capital District, Papua New Guinea
+#     email: matthew.leavesley@gmail.com
+#     attributes:
+#       corresponding: true
+#   - name: Nicolas BRUCATO
+#     affiliations: Laboratoire Évolution and Diversité Biologique (EDB UMR5174), Université de Toulouse Midi-Pyrénées, CNRS, IRD, UPS, Toulouse, France
+#     email: nicolas.brucato@univ-tlse3.fr
+#     attributes:
+#       corresponding: true
+#   - name: François-Xavier RICAUT 
+#     affiliations: Laboratoire Évolution and Diversité Biologique (EDB UMR5174), Université de Toulouse Midi-Pyrénées, CNRS, IRD, UPS, Toulouse, France
+date: "2023-06-15"
+image: "blood.png"
+toc: false
+abstract: |
+  The discovery of human blood groups in the early 20th century significantly advanced transfusion medicine. These groups were also among the first biological markers used to reconstruct the population history of New Guinea in the early 1920s. Recent advances in whole genome sequencing has allowed accurate blood group phenotyping and genotyping (43 blood group systems involving 48 genes and 1500 alleles), and in parallel has revealed that New Guineans harbor one of the greatest genetic diversities on the planet. However, blood group genomic profiles in New Guineans, their geographic distribution and their link to pathogenic pressure (i.e. malaria) is understudied. Using these new genomic resources, this study describes the blood group diversity from 150 whole genome sequences from 18 provinces in Papua New Guinea. We found that there is a strong geographic structuration based on the 72 blood group variants identified. In addition, our results suggest a link between some alleles and the presence of the malaria causing parasites (*P. falciparum* and *P. vivax*) – some of these alleles being potentially inherited from Neanderthal and Denisovan.<br>Our study shows the potential of genomic blood group profiling to better understand the interaction between blood groups, environment and population history in Papua New Guinea.
+
+---
+
+![](poster_BloodGroups.jpg)
